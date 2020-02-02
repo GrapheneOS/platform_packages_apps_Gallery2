@@ -71,7 +71,6 @@
                 <data android:mimeType="video/3gpp2" />
                 <data android:mimeType="video/webm" />
                 <data android:mimeType="video/avi" />
-                <data android:mimeType="application/sdp" />
              </intent-filter>
              <intent-filter>
                 <!-- HTTP live support -->
@@ -153,7 +152,6 @@
                 <data android:mimeType="video/3gp" />
                 <data android:mimeType="video/3gpp" />
                 <data android:mimeType="video/3gpp2" />
-                <data android:mimeType="application/sdp" />
             </intent-filter>
         </activity>
 
