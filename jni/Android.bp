@@ -12,6 +12,7 @@ cc_defaults {
 
         "-Wno-unused-parameter",
     ],
+    header_libs: ["jni_headers"],
     sdk_version: "9",
     shared_libs: ["liblog"],
 }
