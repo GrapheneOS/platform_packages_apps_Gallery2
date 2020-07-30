@@ -48,14 +48,14 @@ import com.android.gallery3d.filtershow.state.StateAdapter;
 import java.util.List;
 import java.util.Vector;
 
-public class MasterImage implements RenderingRequestCaller {
+public class PrimaryImage implements RenderingRequestCaller {
 
-    private static final String LOGTAG = "MasterImage";
+    private static final String LOGTAG = "PrimaryImage";
     private boolean DEBUG  = false;
     private static final boolean DISABLEZOOM = false;
     public static final int SMALL_BITMAP_DIM = 160;
     public static final int MAX_BITMAP_DIM = 900;
-    private static MasterImage sMasterImage = null;
+    private static PrimaryImage sPrimaryImage = null;
 
     private boolean mSupportsHighRes = false;
 
@@ -116,19 +116,19 @@ public class MasterImage implements RenderingRequestCaller {
     private List<ExifTag> mEXIF;
     private BitmapCache mBitmapCache = new BitmapCache();
 
-    private MasterImage() {
+    private PrimaryImage() {
     }
 
     // TODO: remove singleton
-    public static void setMaster(MasterImage master) {
-        sMasterImage = master;
+    public static void setPrimary(PrimaryImage primary) {
+        sPrimaryImage = primary;
     }
 
-    public static MasterImage getImage() {
-        if (sMasterImage == null) {
-            sMasterImage = new MasterImage();
+    public static PrimaryImage getImage() {
+        if (sPrimaryImage == null) {
+            sPrimaryImage = new PrimaryImage();
         }
-        return sMasterImage;
+        return sPrimaryImage;
     }
 
     public Bitmap getOriginalBitmapSmall() {
@@ -664,7 +664,7 @@ public class MasterImage implements RenderingRequestCaller {
             invalidatePartialPreview();
             return;
         }
-        Matrix originalToScreen = MasterImage.getImage().originalImageToScreen();
+        Matrix originalToScreen = PrimaryImage.getImage().originalImageToScreen();
         if (originalToScreen == null) {
             return;
         }
@@ -721,7 +721,7 @@ public class MasterImage implements RenderingRequestCaller {
     }
 
     public static void reset() {
-        sMasterImage = null;
+        sPrimaryImage = null;
     }
 
     public float getScaleFactor() {
