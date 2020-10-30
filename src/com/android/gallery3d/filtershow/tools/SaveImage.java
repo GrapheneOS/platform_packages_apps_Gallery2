@@ -346,9 +346,10 @@ public class SaveImage {
         // newSourceUri is then pointing to the new location.
         // If no file is moved, newSourceUri will be the same as mSourceUri.
         Uri newSourceUri = mSourceUri;
-        if (!flatten) {
+        /*if (!flatten) {
+            //Useless and cause the crash bcs it destroy the reference to the file of the URI mSelectedImageUri
             newSourceUri = moveSrcToAuxIfNeeded(mSourceUri, mDestinationFile);
-        }
+        }*/
 
         Uri savedUri = mSelectedImageUri;
         if (mPreviewImage != null) {
