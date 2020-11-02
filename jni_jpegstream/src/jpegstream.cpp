@@ -296,12 +296,12 @@ static const char *outClassPathName =
 static const char *inClassPathName =
         "com/android/gallery3d/jpegstream/JPEGInputStream";
 
-static JNINativeMethod writeMethods[] = { { "setup",
+static const JNINativeMethod writeMethods[] = { { "setup",
         "(Ljava/io/OutputStream;IIII)I", (void*) OutputStream_setup }, {
         "cleanup", "()V", (void*) OutputStream_cleanup }, { "writeInputBytes",
         "([BII)I", (void*) OutputStream_writeInputBytes } };
 
-static JNINativeMethod readMethods[] = { { "setup",
+static const JNINativeMethod readMethods[] = { { "setup",
         "(Landroid/graphics/Point;Ljava/io/InputStream;I)I",
         (void*) InputStream_setup }, { "cleanup", "()V",
         (void*) InputStream_cleanup }, { "readDecodedBytes", "([BII)I",
@@ -309,7 +309,7 @@ static JNINativeMethod readMethods[] = { { "setup",
         (void*) InputStream_skipDecodedBytes } };
 
 static int registerNativeMethods(JNIEnv* env, const char* className,
-        JNINativeMethod* gMethods, int numMethods) {
+        const JNINativeMethod* gMethods, int numMethods) {
     jclass clazz;
     clazz = env->FindClass(className);
     if (clazz == NULL) {
