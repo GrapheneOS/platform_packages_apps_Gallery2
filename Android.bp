@@ -32,7 +32,7 @@ android_app {
 
     sdk_version: "current",
 
-    target_sdk_version: "28",
+    target_sdk_version: "29",
 
     jni_libs: [
         "libjni_eglfence",
