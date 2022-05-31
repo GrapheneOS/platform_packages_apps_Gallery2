@@ -69,14 +69,18 @@ public class LocalAlbum extends MediaSet {
 
         if (isImage) {
             mWhereClause = ImageColumns.BUCKET_ID + " = ?";
-            mOrderClause = ImageColumns.DATE_TAKEN + " DESC, "
+            mOrderClause = "CASE WHEN + " + ImageColumns.DATE_TAKEN + " != 0 THEN "
+                    + ImageColumns.DATE_TAKEN + " ELSE ("
+                    + ImageColumns.DATE_ADDED + " * 1000) END DESC, "
                     + ImageColumns._ID + " DESC";
             mBaseUri = Images.Media.EXTERNAL_CONTENT_URI;
             mProjection = LocalImage.PROJECTION;
             mItemPath = LocalImage.ITEM_PATH;
         } else {
             mWhereClause = VideoColumns.BUCKET_ID + " = ?";
-            mOrderClause = VideoColumns.DATE_TAKEN + " DESC, "
+            mOrderClause = "CASE WHEN + " + VideoColumns.DATE_TAKEN + " != 0 THEN "
+                    + VideoColumns.DATE_TAKEN + " ELSE ("
+                    + VideoColumns.DATE_ADDED + " * 1000) END DESC, "
                     + VideoColumns._ID + " DESC";
             mBaseUri = Video.Media.EXTERNAL_CONTENT_URI;
             mProjection = LocalVideo.PROJECTION;
