@@ -319,9 +319,6 @@ public class MoviePlayer implements
     }
 
     private void startVideo() {
-        // For streams that we expect to be slow to start up, show a
-        // progress spinner until playback starts.
-        String scheme = mUri.getScheme();
         mController.showPlaying();
         mController.hide();
 
