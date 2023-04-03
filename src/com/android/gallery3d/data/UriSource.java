@@ -64,7 +64,6 @@ class UriSource extends MediaSource {
             if (type != null) return type;
         }
         // Assume the type is image if the type cannot be resolved
-        // This could happen for "http" URI.
         String type = mApplication.getContentResolver().getType(uri);
         if (type == null) type = "image/*";
         return type;

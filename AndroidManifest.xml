@@ -12,24 +12,14 @@
     <permission android:name="com.android.gallery3d.permission.GALLERY_PROVIDER"
             android:protectionLevel="signatureOrSystem" />
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="com.android.gallery3d.permission.GALLERY_PROVIDER" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -49,10 +39,8 @@
             android:appCategory="image"
             android:restoreAnyVersion="true"
             android:supportsRtl="true"
-            android:requestLegacyExternalStorage="true"
-            usesCleartextHttp="true">
+            android:requestLegacyExternalStorage="true">
         <uses-library android:name="com.google.android.media.effects" android:required="false" />
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity android:name="com.android.gallery3d.app.MovieActivity"
                 android:label="@string/movie_view_label"
                 android:exported="true"
@@ -61,14 +49,11 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="rtsp" />
              </intent-filter>
              <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" />
-                <data android:scheme="https" />
                 <data android:scheme="content" />
                 <data android:scheme="file" />
                 <data android:mimeType="video/mpeg4" />
@@ -78,18 +63,6 @@
                 <data android:mimeType="video/3gpp2" />
                 <data android:mimeType="video/webm" />
                 <data android:mimeType="video/avi" />
-             </intent-filter>
-             <intent-filter>
-                <!-- HTTP live support -->
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:mimeType="audio/x-mpegurl" />
-                <data android:mimeType="audio/mpegurl" />
-                <data android:mimeType="application/vnd.apple.mpegurl" />
-                <data android:mimeType="application/x-mpegurl" />
              </intent-filter>
         </activity>
 
@@ -140,8 +113,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="" />
-                <data android:scheme="http" />
-                <data android:scheme="https" />
                 <data android:scheme="content" />
                 <data android:scheme="file" />
                 <data android:mimeType="image/*" />
@@ -151,8 +122,6 @@
                 <action android:name="com.android.camera.action.REVIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" />
-                <data android:scheme="https" />
                 <data android:scheme="content" />
                 <data android:scheme="file" />
                 <data android:mimeType="video/mpeg4" />
