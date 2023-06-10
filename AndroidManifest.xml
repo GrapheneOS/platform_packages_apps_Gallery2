@@ -327,15 +327,6 @@
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:theme="@style/Theme.Gallery.Dialog"/>
 
-        <receiver android:name="com.android.gallery3d.gadget.PhotoAppWidgetProvider"
-                android:exported="true"
-                android:label="@string/appwidget_title">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                    android:resource="@xml/widget_info" />
-        </receiver>
         <receiver android:name="com.android.gallery3d.app.PackagesMonitor"
             android:exported="true">
             <intent-filter>
