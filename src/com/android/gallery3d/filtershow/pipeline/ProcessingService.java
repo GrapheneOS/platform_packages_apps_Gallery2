@@ -297,7 +297,6 @@ public class ProcessingService extends Service {
     private void setupPipeline() {
         Resources res = getResources();
         FiltersManager.setResources(res);
-        CachingPipeline.createRenderscriptContext(this);
 
         FiltersManager filtersManager = FiltersManager.getManager();
         filtersManager.addLooks(this);
@@ -315,7 +314,6 @@ public class ProcessingService extends Service {
     private void tearDownPipeline() {
         ImageFilter.resetStatics();
         FiltersManager.reset();
-        CachingPipeline.destroyRenderScriptContext();
     }
 
     static {
