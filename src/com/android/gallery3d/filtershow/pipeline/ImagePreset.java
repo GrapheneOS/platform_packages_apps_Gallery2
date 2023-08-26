@@ -18,7 +18,6 @@ package com.android.gallery3d.filtershow.pipeline;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.renderscript.Allocation;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
@@ -529,45 +528,6 @@ public class ImagePreset {
         }
 
         return bitmap;
-    }
-
-    public void applyBorder(Allocation in, Allocation out,
-            boolean copyOut, FilterEnvironment environment) {
-        FilterRepresentation border = getFilterRepresentationForType(
-                FilterRepresentation.TYPE_BORDER);
-        if (border != null && mDoApplyGeometry) {
-            // TODO: should keep the bitmap around
-            Allocation bitmapIn = in;
-            if (copyOut) {
-                bitmapIn = Allocation.createTyped(
-                        CachingPipeline.getRenderScriptContext(), in.getType());
-                bitmapIn.copyFrom(out);
-            }
-            environment.applyRepresentation(border, bitmapIn, out);
-        }
-    }
-
-    public void applyFilters(int from, int to, Allocation in, Allocation out,
-            FilterEnvironment environment) {
-        if (mDoApplyFilters) {
-            if (from < 0) {
-                from = 0;
-            }
-            if (to == -1) {
-                to = mFilters.size();
-            }
-            for (int i = from; i < to; i++) {
-                FilterRepresentation representation = mFilters.elementAt(i);
-                if (representation.getFilterType() == FilterRepresentation.TYPE_GEOMETRY
-                        || representation.getFilterType() == FilterRepresentation.TYPE_BORDER) {
-                    continue;
-                }
-                if (i > from) {
-                    in.copyFrom(out);
-                }
-                environment.applyRepresentation(representation, in, out);
-            }
-        }
     }
 
     public boolean canDoPartialRendering() {
