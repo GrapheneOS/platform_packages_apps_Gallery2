@@ -47,7 +47,6 @@ android_app {
     libs: ["org.apache.http.legacy.stubs"],
 
     optional_uses_libs: [
-        "com.google.android.media.effects",
         "org.apache.http.legacy",
     ],
 
