@@ -51,7 +51,6 @@
             android:supportsRtl="true"
             android:requestLegacyExternalStorage="true"
             usesCleartextHttp="true">
-        <uses-library android:name="com.google.android.media.effects" android:required="false" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity android:name="com.android.gallery3d.app.MovieActivity"
                 android:label="@string/movie_view_label"
@@ -297,9 +296,6 @@
                 <category android:name="android.intent.category.SELECTED_ALTERNATIVE" />
             </intent-filter>
         </activity>
-
-        <uses-library android:name="com.google.android.media.effects"
-                android:required="false" />
 
         <activity android:name="com.android.gallery3d.settings.GallerySettings"
                 android:theme="@style/Theme.Gallery"
