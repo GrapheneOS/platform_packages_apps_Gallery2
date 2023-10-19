@@ -14,6 +14,11 @@
   <init>(...);
 }
 
+# ctors of subclasses of ActivityState are called with Java reflection.
+-keep class * extends com.android.gallery3d.app.ActivityState {
+  <init>(...);
+}
+
 -keep class com.android.camera.CameraActivity {
   public boolean isRecording();
   public long getAutoFocusTime();
