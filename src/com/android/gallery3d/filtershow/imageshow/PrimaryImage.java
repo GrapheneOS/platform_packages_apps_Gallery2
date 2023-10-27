@@ -53,8 +53,8 @@ public class PrimaryImage implements RenderingRequestCaller {
     private static final String LOGTAG = "PrimaryImage";
     private boolean DEBUG  = false;
     private static final boolean DISABLEZOOM = false;
-    public static final int SMALL_BITMAP_DIM = 160;
-    public static final int MAX_BITMAP_DIM = 900;
+    public static final int SMALL_BITMAP_DIM = 320;
+    public static final int MAX_BITMAP_DIM = 1800;
     private static PrimaryImage sPrimaryImage = null;
 
     private boolean mSupportsHighRes = false;
