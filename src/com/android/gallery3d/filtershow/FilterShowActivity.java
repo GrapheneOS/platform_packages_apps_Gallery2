@@ -742,10 +742,15 @@ public class FilterShowActivity extends FragmentActivity implements OnItemClickL
             PrimaryImage primary = PrimaryImage.getImage();
             Rect originalBounds = primary.getOriginalBounds();
             if (primary.supportsHighRes()) {
-                int highresPreviewSize = primary.getOriginalBitmapLarge().getWidth() * 2;
-                if (highresPreviewSize > originalBounds.width()) {
-                    highresPreviewSize = originalBounds.width();
-                }
+                Bitmap originalBitmapLarge = primary.getOriginalBitmapLarge();
+                Rect highresPreviewRect = new Rect(0, 0, originalBitmapLarge.getWidth(), originalBitmapLarge.getHeight());
+                // Make sure that 'highresPreviewRect' is not larger than 'originalBounds'.
+                highresPreviewRect.intersect(originalBounds);
+                // The 'loadOrientedConstrainedBitmap' function scales down the image based on its
+                // larger dimension (either width or height). To prevent excessive downscaling,
+                // 'highresPreviewSize' must be set in accordance with the dimension that is larger,
+                // either width or height.
+                int highresPreviewSize = Math.max(highresPreviewRect.width(), highresPreviewRect.height());
                 Rect bounds = new Rect();
                 Bitmap originalHires = ImageLoader.loadOrientedConstrainedBitmap(primary.getUri(),
                         primary.getActivity(), highresPreviewSize,
