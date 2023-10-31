@@ -257,6 +257,9 @@ public final class ImageLoader {
         InputStream is = null;
         int w = 0;
         int h = 0;
+        if (options.inSampleSize != 0) {
+            return null;
+        }
         try {
             is = context.getContentResolver().openInputStream(uri);
             BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(is, false);
@@ -276,18 +279,6 @@ public final class ImageLoader {
             Bitmap bitmap = decoder.decodeRegion(imageBounds, options);
             if (bitmap != reuse) {
                 cache.cache(reuse); // not reused, put back in cache
-            }
-            // Previously, the function returned 'null' for a non-zero 'inSampleSize,' leading to
-            // low-resolution image previews. By default, a sample size greater than 1 downscales
-            // image dimensions. To workaround this, we rescale the image back to its expected
-            // dimensions when 'inSampleSize' is greater than 1.
-            int sampleSize = options.inSampleSize;
-            if (sampleSize > 1) {
-                int scaledWidth = sampleSize * imageBounds.width();
-                int scaledHeight = sampleSize * imageBounds.height();
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true);
-                bitmap.recycle();
-                bitmap = scaledBitmap;
             }
             return bitmap;
         } catch (FileNotFoundException e) {
