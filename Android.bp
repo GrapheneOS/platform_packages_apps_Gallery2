@@ -46,7 +46,10 @@ android_app {
 
     libs: ["org.apache.http.legacy"],
 
-    optional_uses_libs: ["com.google.android.media.effects"],
+    optional_uses_libs: [
+        "com.google.android.media.effects",
+        "org.apache.http.legacy",
+    ],
 
     jarjar_rules: "jarjar-rules.txt",
 }
