@@ -44,7 +44,7 @@ android_app {
         proguard_flags_files: ["proguard.flags"],
     },
 
-    libs: ["org.apache.http.legacy"],
+    libs: ["org.apache.http.legacy.stubs"],
 
     optional_uses_libs: [
         "com.google.android.media.effects",
