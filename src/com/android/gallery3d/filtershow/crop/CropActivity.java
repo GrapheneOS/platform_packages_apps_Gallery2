@@ -356,7 +356,6 @@ public class CropActivity extends Activity {
 
         private final WallpaperManager mWPManager;
         InputStream mInStream = null;
-        OutputStream mOutStream = null;
         String mOutputFormat = null;
         Uri mOutUri = null;
         Uri mInUri = null;
@@ -373,6 +372,7 @@ public class CropActivity extends Activity {
                 Log.w(LOGTAG, "cannot read original file, no input URI given");
             } else {
                 Utils.closeSilently(mInStream);
+                mInStream = null;
                 try {
                     mInStream = getContentResolver().openInputStream(mInUri);
                 } catch (FileNotFoundException e) {
@@ -385,7 +385,6 @@ public class CropActivity extends Activity {
                 RectF cropBounds, RectF photoBounds, RectF originalBitmapBounds, int rotation,
                 int outputX, int outputY) {
             mOutputFormat = outputFormat;
-            mOutStream = null;
             mOutUri = destUri;
             mInUri = sourceUri;
             mFlags = flags;
@@ -400,20 +399,24 @@ public class CropActivity extends Activity {
             mOutputX = outputX;
             mOutputY = outputY;
 
-            if ((flags & DO_EXTRA_OUTPUT) != 0) {
-                if (mOutUri == null) {
-                    Log.w(LOGTAG, "cannot write file, no output URI given");
-                } else {
-                    try {
-                        mOutStream = getContentResolver().openOutputStream(mOutUri);
-                    } catch (FileNotFoundException e) {
-                        Log.w(LOGTAG, "cannot write file: " + mOutUri.toString(), e);
-                    }
-                }
-            }
-
             if ((flags & (DO_EXTRA_OUTPUT | DO_SET_WALLPAPER)) != 0) {
                 regenerateInputStream();
+            }
+        }
+
+        private OutputStream openOutStream() {
+            if ((mFlags & DO_EXTRA_OUTPUT) == 0) {
+                throw new IllegalStateException("no DO_EXTRA_OUTPUT flag");
+            }
+            if (mOutUri == null) {
+                throw new IllegalStateException("mOutUri == null");
+            }
+
+            try {
+                return getContentResolver().openOutputStream(mOutUri);
+            } catch (FileNotFoundException e) {
+                Log.w(LOGTAG, "uri: " + mOutUri, e);
+                return null;
             }
         }
 
@@ -545,12 +548,21 @@ public class CropActivity extends Activity {
 
                 // If we only need to output to a URI, compress straight to file
                 if (mFlags == DO_EXTRA_OUTPUT) {
-                    if (mOutStream == null
-                            || !crop.compress(cf, DEFAULT_COMPRESS_QUALITY, mOutStream)) {
-                        Log.w(LOGTAG, "failed to compress bitmap to file: " + mOutUri.toString());
+                    boolean success = false;
+                    try (OutputStream outStream = openOutStream()) {
+                        if (outStream != null) {
+                            if (crop.compress(cf, DEFAULT_COMPRESS_QUALITY, outStream)) {
+                                mResultIntent.setData(mOutUri);
+                                success = true;
+                            } else {
+                                Log.w(LOGTAG, "failed to compress bitmap to file: " + mOutUri.toString());
+                            }
+                        }
+                    } catch (IOException e) {
+                        Log.w(LOGTAG, "", e);
+                    }
+                    if (!success) {
                         failure = true;
-                    } else {
-                        mResultIntent.setData(mOutUri);
                     }
                 } else {
                     // Compress to byte array
@@ -560,20 +572,18 @@ public class CropActivity extends Activity {
                         // If we need to output to a Uri, write compressed
                         // bitmap out
                         if ((mFlags & DO_EXTRA_OUTPUT) != 0) {
-                            if (mOutStream == null) {
-                                Log.w(LOGTAG,
-                                        "failed to compress bitmap to file: " + mOutUri.toString());
-                                failure = true;
-                            } else {
-                                try {
-                                    mOutStream.write(tmpOut.toByteArray());
+                            boolean success = false;
+                            try (OutputStream stream = openOutStream()) {
+                                if (stream != null) {
+                                    stream.write(tmpOut.toByteArray());
                                     mResultIntent.setData(mOutUri);
-                                } catch (IOException e) {
-                                    Log.w(LOGTAG,
-                                            "failed to compress bitmap to file: "
-                                                    + mOutUri.toString(), e);
-                                    failure = true;
+                                    success = true;
                                 }
+                            } catch (IOException e) {
+                                Log.w(LOGTAG, "failed to compress bitmap to file: " + mOutUri, e);
+                            }
+                            if (!success) {
+                                failure = true;
                             }
                         }
 
@@ -603,7 +613,6 @@ public class CropActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            Utils.closeSilently(mOutStream);
             Utils.closeSilently(mInStream);
             doneBitmapIO(result.booleanValue(), mResultIntent);
         }
