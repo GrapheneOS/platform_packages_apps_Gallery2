@@ -119,7 +119,7 @@ public class FilterTypeSet extends MediaSet implements ContentListener {
 
     @Override
     public int getSupportedOperations() {
-        return SUPPORT_SHARE | SUPPORT_DELETE;
+        return SUPPORT_SHARE;
     }
 
     @Override
