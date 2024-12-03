@@ -120,7 +120,7 @@ public class ClusterAlbum extends MediaSet implements ContentListener {
 
     @Override
     public int getSupportedOperations() {
-        return SUPPORT_SHARE | SUPPORT_DELETE | SUPPORT_INFO;
+        return SUPPORT_SHARE | SUPPORT_INFO;
     }
 
     @Override
