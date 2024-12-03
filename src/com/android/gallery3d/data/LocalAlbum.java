@@ -266,7 +266,7 @@ public class LocalAlbum extends MediaSet {
 
     @Override
     public int getSupportedOperations() {
-        return SUPPORT_DELETE | SUPPORT_SHARE | SUPPORT_INFO;
+        return SUPPORT_SHARE | SUPPORT_INFO;
     }
 
     @Override
