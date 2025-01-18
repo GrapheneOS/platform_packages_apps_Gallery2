@@ -41,6 +41,7 @@ android_app {
     ],
 
     optimize: {
+        keep_runtime_invisible_annotations: true,
         proguard_flags_files: ["proguard.flags"],
     },
 
