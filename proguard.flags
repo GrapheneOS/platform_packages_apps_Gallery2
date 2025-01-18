@@ -50,7 +50,10 @@
 -keep interface android.support.v4.app.** { *; }
 -keep class com.actionbarsherlock.** { *; }
 -keep interface com.actionbarsherlock.** { *; }
--keepattributes *Annotation*
+-keepattributes RuntimeVisibleAnnotations,
+                RuntimeVisibleParameterAnnotations,
+                RuntimeVisibleTypeAnnotations,
+                AnnotationDefault
 
 # Required for JobIntentService
 -keep class androidx.core.app.CoreComponentFactory { *; }
