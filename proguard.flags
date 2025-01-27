@@ -59,7 +59,10 @@
 -keep class androidx.core.app.CoreComponentFactory { *; }
 
 # Required for mp4parser
--keep public class * implements com.coremedia.iso.boxes.Box
+# TODO(b/373579455): Evaluate if <init> needs to be kept.
+-keep public class * implements com.coremedia.iso.boxes.Box {
+  void <init>();
+}
 
 #-assumenosideeffects junit.framework.Assert {
 #*;
@@ -93,5 +96,3 @@
 -keep class com.android.gallery3d.jpegstream.JPEGOutputStream { *; }
 -keep class com.android.gallery3d.jpegstream.JPEGInputStream { *; }
 -keep class com.android.gallery3d.jpegstream.StreamUtils { *; }
-
-
